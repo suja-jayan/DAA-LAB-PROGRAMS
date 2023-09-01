@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cmath>
+
+void nqueens(int n);
+bool place(int x[], int k, int i);
+
+int main() {
+    int n;
+    std::cout << "Enter the number of Queens: ";
+    std::cin >> n;
+    nqueens(n);
+    return 0;
+}
+
+void printSolution(int x[], int n) {
+    static int solutionCount = 0;
+    solutionCount++;
+    
+    std::cout << "Solution " << solutionCount << ":\n";
+    std::cout << "Queen\tPosition\n";
+    
+    for (int i = 1; i <= n; i++) {
+        std::cout << i << "\t" << x[i] << "\n";
+    }
+    std::cout << std::endl;
+}
+
+void nqueens(int n) {
+    int x[n + 1];
+    int k = 1;
+    x[k] = 0;
+    
+    while (k > 0) {
+        x[k]++;
+        
+        while (x[k] <= n && !place(x, k, x[k])) {
+            x[k]++;
+        }
+        
+        if (x[k] <= n) {
+            if (k == n) {
+                printSolution(x, n);
+            } else {
+                k++;
+                x[k] = 0;
+            }
+        } else {
+            k--;
+        }
+    }
+}
+
+bool place(int x[], int k, int i) {
+    for (int j = 1; j < k; j++) {
+        if (x[j] == i || std::abs(j - k) == std::abs(x[j] - i)) {
+            return false;
+        }
+    }
+    return true;
+}
