@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+
+int binomialCoefficient(int n, int k) {
+    std::vector<std::vector<int>> c(n + 1, std::vector<int>(k + 1, 0));
+
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= std::min(i, k); j++) {
+            if (j == 0 || i == j) {
+                c[i][j] = 1;
+            } else {
+                c[i][j] = c[i - 1][j - 1] + c[i - 1][j];
+            }
+        }
+    }
+    return c[n][k];
+}
+
+int main() {
+    int n, k;
+    std::cout << "Enter the values of n and k such that n >= k: ";
+    std::cin >> n >> k;
+
+    if (n < k) {
+        std::cout << "Invalid input: n must be greater than or equal to k." << std::endl;
+        return 1; // Exit with an error code
+    }
+
+    std::cout << "C(" << n << "," << k << ") = " << binomialCoefficient(n, k) << std::endl;
+
+    return 0;
+}
