@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+
+const int MAX_NODES = 10;
+
+int a[MAX_NODES][MAX_NODES], n;
+int vis[MAX_NODES];
+
+int dfs(int);
+
+int main() {
+    int i, j, src, ans;
+
+    std::cout << "Enter the number of nodes: ";
+    std::cin >> n;
+
+    for (j = 1; j <= n; j++) {
+        vis[j] = 0;
+    }
+
+    std::cout << "Enter the adjacency matrix:" << std::endl;
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= n; j++) {
+            std::cin >> a[i][j];
+        }
+    }
+
+    std::cout << "Enter the source node: ";
+    std::cin >> src;
+
+    ans = dfs(src);
+
+    if (ans == 1) {
+        std::cout << "The graph is connected." << std::endl;
+    } else {
+        std::cout << "The graph is not connected." << std::endl;
+    }
+
+    return 0;
+}
+
+int dfs(int src) {
+    int j;
+    vis[src] = 1;
+
+    for (j = 1; j <= n; j++) {
+        if (a[src][j] == 1 && vis[j] != 1) {
+            dfs(j);
+        }
+    }
+
+    for (j = 1; j <= n; j++) {
+        if (vis[j] != 1) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
