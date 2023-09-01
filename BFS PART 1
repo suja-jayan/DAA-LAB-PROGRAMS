@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+
+const int MAX_NODES = 10;
+
+int a[MAX_NODES][MAX_NODES], n;
+
+void bfs(int);
+
+int main() {
+    int i, j, src;
+    std::cout << "Enter the number of nodes: ";
+    std::cin >> n;
+    
+    std::cout << "Enter the adjacency matrix:" << std::endl;
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= n; j++) {
+            std::cin >> a[i][j];
+        }
+    }
+    
+    std::cout << "Enter the source node: ";
+    std::cin >> src;
+    
+    bfs(src);
+    
+    return 0;
+}
+
+void bfs(int src) {
+    int q[MAX_NODES], f = 0, r = -1, vis[MAX_NODES], i, j;
+    
+    for (j = 1; j <= n; j++) {
+        vis[j] = 0;
+    }
+    
+    vis[src] = 1;
+    r = r + 1;
+    q[r] = src;
+    
+    while (f <= r) {
+        i = q[f];
+        f = f + 1;
+        
+        for (j = 1; j <= n; j++) {
+            if (a[i][j] == 1 && vis[j] != 1) {
+                vis[j] = 1;
+                r = r + 1;
+                q[r] = j;
+            }
+        }
+    }
+    
+    for (j = 1; j <= n; j++) {
+        if (vis[j] != 1) {
+            std::cout << "Node " << j << " is not reachable" << std::endl;
+        } else {
+            std::cout << "Node " << j << " is reachable" << std::endl;
+        }
+    }
+}
